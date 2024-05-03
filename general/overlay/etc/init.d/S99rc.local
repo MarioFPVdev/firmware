@@ -1,32 +1,20 @@
 #!/bin/sh
-#
-# Start rc.local
-#
-
 
 start() {
-	echo "Starting rc.local"
 	/etc/rc.local
 }
 
-restart() {
-	echo "Restarting rc.local"
-	/etc/rc.local
+stop() {
+	[ -x /etc/rc.local.stop ] && /etc/rc.local.stop
 }
 
 case "$1" in
-	start)
+	start|stop)
 		"$1"
 		;;
 
-	restart|reload)
-		start
-		;;
-	stop)
-		# Intentionally left blank, no need to stop rc.local
-		;;
 	*)
-		echo "Usage: $0 {start|stop|restart|reload}"
+		echo "Usage: $0 {start|stop}"
 		exit 1
 		;;
 esac

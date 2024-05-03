@@ -1,0 +1,19 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		if [ ! -e /etc/custom.ok ] && [ -e /usr/share/openipc/customizer.sh ]; then
+			echo "Run customizer script..."
+			sh /usr/share/openipc/customizer.sh
+			touch /etc/custom.ok
+		fi
+
+		if [ ! -e /etc/network.ok ] && [ -e /usr/share/openipc/wireless.sh ]; then
+			echo "Run wireless script..."
+			sh /usr/share/openipc/wireless.sh
+			touch /etc/network.ok
+		fi
+
+		check_mac
+		;;
+esac

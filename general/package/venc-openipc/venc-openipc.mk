@@ -4,8 +4,9 @@
 #
 ################################################################################
 
-VENC_OPENIPC_SITE = https://github.com/openipc/silicon_research/archive
-VENC_OPENIPC_SOURCE = master.tar.gz
+VENC_OPENIPC_SITE = $(call github,openipc,silicon_research,$(VENC_OPENIPC_VERSION))
+VENC_OPENIPC_VERSION = HEAD
+
 VENC_OPENIPC_LICENSE = MIT
 
 ifeq ($(OPENIPC_SOC_VENDOR),hisilicon)
@@ -23,6 +24,9 @@ endef
 define VENC_OPENIPC_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 755 -d $(TARGET_DIR)/etc/init.d
 	$(INSTALL) -m 755 -t $(TARGET_DIR)/etc/init.d $(VENC_OPENIPC_PKGDIR)/files/S98venc
+
+	$(INSTALL) -m 755 -d $(TARGET_DIR)/etc
+	$(INSTALL) -m 644 -t $(TARGET_DIR)/etc $(VENC_OPENIPC_PKGDIR)/files/venc.conf
 
 	$(INSTALL) -m 755 -d $(TARGET_DIR)/usr/bin
 	$(INSTALL) -m 755 -t $(TARGET_DIR)/usr/bin $(@D)/venc/venc
